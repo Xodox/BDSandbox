@@ -1,8 +1,10 @@
 package com.xod.bdsb.server.dto;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonAutoDetect
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UrlPageDto {
 
     public Integer id;
@@ -40,5 +42,9 @@ public class UrlPageDto {
 
     public String getDesc() {
         return desc;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

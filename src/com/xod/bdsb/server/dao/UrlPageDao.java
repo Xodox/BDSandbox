@@ -22,4 +22,6 @@ public interface UrlPageDao {
 
     public UrlPageDto deletePage(UrlPageDto page);
 
+    public void createPage(String name, String url, String desc);
+
 }

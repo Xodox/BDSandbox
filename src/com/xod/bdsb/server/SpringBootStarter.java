@@ -9,24 +9,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-/**
- * Created by protsenkov on 5/21/2015.
- */
 @SpringBootApplication
-public class SpringBootStarter implements CommandLineRunner{
+public class SpringBootStarter {
 
-
-    @Autowired
-    JdbcTemplate jdbcTemplate;
 
     public static void main(String[] args)
 
     {
         SpringApplication.run(new Object[]{SpringBootStarter.class}, args);
-
-
     }
 
 
@@ -35,19 +28,12 @@ public class SpringBootStarter implements CommandLineRunner{
     public WebSecurityConfigurerAdapter getSecurityBean(){
         WebSecurityConfigurerAdapter adapter = new WebSecurityConfigurerAdapter(){
             @Override
-            protected void configure(HttpSecurity http) throws Exception {
-                http.authorizeRequests().antMatchers("/").permitAll();
+            public void configure(WebSecurity web) throws Exception {
+                web.ignoring().antMatchers("/**");
             }
         };
         return adapter;
     }
 
 
-    @Override
-    public void run(String... strings) throws Exception {
-        System.out.println("===++===");
-        System.out.println(jdbcTemplate + "---===---");
-        jdbcTemplate.execute("CREATE TABLE WEB_PAGE (ID INT PRIMARY KEY AUTO_INCREMENT, NAME VARCHAR(255),URL VARCHAR(255),DESC VARCHAR(255));");
-
-    }
 }
