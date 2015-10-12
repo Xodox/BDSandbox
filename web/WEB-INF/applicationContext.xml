@@ -3,4 +3,14 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
        <bean class="com.xod.bdsb.server.bean.BdEnterBeanImpl" id="bdEnterBean"/>
+
+       <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate" >
+              <constructor-arg>
+                     <bean class="org.h2.jdbcx.JdbcDataSource">
+                            <property name="URL" value="jdbc:h2:~/BDSB_H2"/>
+                            <property name="user" value="sa"/>
+                            <property name="password" value=""/>
+                     </bean>
+              </constructor-arg>
+       </bean>
 </beans>

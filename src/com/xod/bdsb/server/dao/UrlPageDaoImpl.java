@@ -20,7 +20,6 @@ public class UrlPageDaoImpl implements UrlPageDao {
 
     @Override
     public List<UrlPageDto> findAllPages() {
-        System.out.println("auto = " + jdbcTemplate);
         UrlPageDto page = new UrlPageDto(111, "name", "url", "desc");
 
         return jdbcTemplate.query("SELECT * FROM WEB_PAGE", new RowMapper<UrlPageDto>() {
@@ -33,21 +32,36 @@ public class UrlPageDaoImpl implements UrlPageDao {
 
     }
 
+
+    public void createPage(String name, String url, String desc){
+        SimpleJdbcInsert insertActor = new SimpleJdbcInsert(jdbcTemplate.getDataSource())
+                .withTableName("WEB_PAGE")
+                .usingGeneratedKeyColumns("ID");
+        Map params = new HashMap();
+        params.put("name", name);
+        params.put("url", url);
+        params.put("desc",desc);
+        Number key = insertActor.executeAndReturnKey(params);
+
+        System.out.println("key = " + key);
+        System.out.println(insertActor.getGeneratedKeyNames());
+//        return ;
+    }
+
     @Override
-    public Integer createPage(final UrlPageDto page) {
+    public Integer createPage(UrlPageDto page) {
         System.out.println("================");
         SimpleJdbcInsert insertActor = new SimpleJdbcInsert(jdbcTemplate.getDataSource())
                 .withTableName("WEB_PAGE")
                 .usingGeneratedKeyColumns("ID");
         Map params = new HashMap();
         params.put("name", page.getName());
-//        params.put("id", 11);
-
         params.put("url", page.getUrl());
         params.put("desc", page.getDesc());
 
-        insertActor.execute(params);
-        return page.getId();
+        Number key = insertActor.executeAndReturnKey(params);
+        System.out.println(key);
+        return key.intValue();
     }
 
     @Override

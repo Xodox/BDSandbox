@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * Created by protsenkov on 5/21/2015.
  */
-public class Main {
+public class Main {          
     private static final SessionFactory ourSessionFactory;
     private static final ServiceRegistry serviceRegistry;
 
