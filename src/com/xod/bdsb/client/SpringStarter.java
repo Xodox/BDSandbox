@@ -17,7 +17,7 @@ public class SpringStarter {
 
         public static void main(String args[]) {
 
-            System.out.println("===---==");
+            System.out.println("===-22222--==");
             RestTemplate restTemplate = new RestTemplate();
             UrlPageDto page = new UrlPageDto("name", "url", "111desc");
             Map<String, String> params = new HashMap<>();
