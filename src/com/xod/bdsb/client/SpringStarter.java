@@ -2,6 +2,7 @@ package com.xod.bdsb.client;
 
 import com.xod.bdsb.server.dto.SystemInfoDto;
 import com.xod.bdsb.server.dto.UrlPageDto;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
@@ -15,20 +16,18 @@ public class SpringStarter {
 
         public static void main(String args[]) {
             RestTemplate restTemplate = new RestTemplate();
-            UrlPageDto page = new UrlPageDto(11, "name", "url", "111desc");
+            UrlPageDto page = new UrlPageDto("name", "url", "111desc");
             Map<String, String> params = new HashMap<>();
             params.put("name", "name1");
             params.put("url", "url1");
             params.put("desc", "ddd1");
-//            restTemplate."http://localhost:8080/url_page/create", page);
-//            postForEntity("http://localhost:8080/url_page/create", page, Void.class, params);
+            List<UrlPageDto> forObject = restTemplate.getForObject("http://localhost:8080/url_page/getAll", List.class);
+            System.out.println(forObject.size() + "---");
+//            restTemplate.postForObject("http://localhost:8080/url_page/create", page, Integer.class, new Object[0]);
+//            restTemplate.postForEntity("http://localhost:8080/url_page/create", page, Void.class,new Object[0]);
+            page = restTemplate.postForObject("http://localhost:8080/url_page/create", page, UrlPageDto.class);
+            ResponseEntity<UrlPageDto> responseEntity= restTemplate.postForEntity("http://localhost:8080/url_page/create", page, UrlPageDto.class);
 
-
-//            List<UrlPageDto> pages = restTemplate.getForObject("http://localhost:8080/url_page/getAll", List.class);
-//            if(pages != null){
-//                System.out.println(pages.size());
-//            }
-
-            System.out.println("==============");
+            System.out.println("=====11111133333333333331111========= + " + page.getId());
     }
 }
