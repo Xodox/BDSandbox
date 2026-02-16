@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BDSandbox</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="app">
+    <div id="login-page" class="page">
+      <div class="login-card">
+        <h1>BDSandbox</h1>
+        <p class="login-subtitle">Sign in to continue</p>
+        <form id="login-form">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" required autocomplete="username">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required autocomplete="current-password">
+          <p id="login-error" class="error" aria-live="polite"></p>
+          <button type="submit" class="btn btn-primary">Sign in</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="main-app" class="hidden">
+      <header class="header">
+        <a href="#/" class="brand">BDSandbox</a>
+        <nav class="nav">
+          <a href="#/drivers" class="nav-link" data-page="drivers">Drivers</a>
+          <a href="#/cars" class="nav-link" data-page="cars">Cars</a>
+          <a href="#/me" class="nav-link" data-page="me">My profile</a>
+          <a href="#/pages" class="nav-link nav-admin" data-page="pages">Pages</a>
+          <span class="user-info"></span>
+          <button type="button" id="logout-btn" class="btn btn-outline">Logout</button>
+        </nav>
+      </header>
+      <main class="main">
+        <div id="drivers-page" class="content-page hidden">
+          <h2>Drivers</h2>
+          <div class="toolbar">
+            <button type="button" id="driver-add-btn" class="btn btn-primary">Add driver</button>
+          </div>
+          <div id="drivers-list" class="card-list"></div>
+        </div>
+        <div id="driver-form-page" class="content-page hidden">
+          <h2 id="driver-form-title">Edit driver</h2>
+          <form id="driver-form" class="form-card"></form>
+          <div id="driver-assigned-cars" class="driver-cars-section"></div>
+        </div>
+        <div id="cars-page" class="content-page hidden">
+          <h2>Cars</h2>
+          <div class="toolbar" id="cars-toolbar">
+            <button type="button" id="car-add-btn" class="btn btn-primary">Add car</button>
+          </div>
+          <div id="cars-list" class="card-list"></div>
+        </div>
+        <div id="car-form-page" class="content-page hidden">
+          <h2 id="car-form-title">Edit car</h2>
+          <form id="car-form" class="form-card"></form>
+        </div>
+        <div id="car-view-page" class="content-page hidden">
+          <h2>Car details</h2>
+          <div id="car-view" class="form-card"></div>
+        </div>
+        <div id="me-page" class="content-page hidden">
+          <h2>My profile</h2>
+          <div id="me-profile" class="form-card"></div>
+          <h3>My cars</h3>
+          <div id="me-cars" class="card-list"></div>
+        </div>
+        <div id="pages-page" class="content-page hidden">
+          <h2>URL Pages</h2>
+          <div id="pages-list" class="card-list"></div>
+        </div>
+      </main>
+    </div>
+  </div>
+  <script src="js/app.js"></script>
+</body>
+</html>

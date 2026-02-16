@@ -1,4 +1,8 @@
--- 50 random drivers (run after schema if spring.datasource.initialize=true)
+SET AUTOCOMMIT TRUE;
+DELETE FROM USERS;
+DELETE FROM DRIVER_CAR;
+DELETE FROM CARS;
+DELETE FROM DRIVERS;
 INSERT INTO DRIVERS (FIRST_NAME, LAST_NAME, YEAR_OF_BIRTH) VALUES
 ('James','Smith',1985),
 ('Maria','Johnson',1990),
@@ -50,8 +54,6 @@ INSERT INTO DRIVERS (FIRST_NAME, LAST_NAME, YEAR_OF_BIRTH) VALUES
 ('Oksana','Campbell',1991),
 ('Timothy','Parker',1983),
 ('Ludmila','Evans',1989);
-
--- Cars (for many-to-many with drivers)
 INSERT INTO CARS (NAME, MODEL, MANUFACTURING_YEAR) VALUES
 ('Toyota','Camry',2020),
 ('Honda','Civic',2019),
@@ -63,13 +65,9 @@ INSERT INTO CARS (NAME, MODEL, MANUFACTURING_YEAR) VALUES
 ('Tesla','Model 3',2023),
 ('Nissan','Altima',2019),
 ('Hyundai','Tucson',2021);
-
--- Driver-Car many-to-many (20 links)
 INSERT INTO DRIVER_CAR (DRIVER_ID, CAR_ID) VALUES
 (1,1),(2,3),(3,2),(4,5),(5,1),(6,4),(7,7),(8,2),(9,6),(10,8),
 (11,3),(12,9),(13,1),(14,4),(15,10),(16,5),(17,2),(18,7),(19,6),(20,8);
-
--- Users: ADMIN, OFFICER, DRIVER (default password: 'password' - BCrypt)
 INSERT INTO USERS (USERNAME, PASSWORD_HASH, ROLE, DRIVER_ID) VALUES
 ('admin','$2a$10$dXJ3SW6G7P50lGmMkkmwe.20cQQubK3.HZWzG3YB1tlRy.fqvM/BG','ADMIN',NULL),
 ('officer','$2a$10$dXJ3SW6G7P50lGmMkkmwe.20cQQubK3.HZWzG3YB1tlRy.fqvM/BG','OFFICER',NULL),

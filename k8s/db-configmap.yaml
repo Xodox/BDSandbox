@@ -10,3 +10,5 @@ data:
   SPRING_DATASOURCE_URL: "jdbc:h2:tcp://h2-service:9092/file:/data/BDSB_H2;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE"
   SPRING_DATASOURCE_DRIVER_CLASS_NAME: "org.h2.Driver"
   SPRING_DATASOURCE_USERNAME: "sa"
+  # Don't run schema/data on startup when using cluster H2 (data loaded via run-data-sql Job)
+  SPRING_DATASOURCE_INITIALIZE: "false"

@@ -1,0 +1,19 @@
+SET AUTOCOMMIT TRUE;
+DELETE FROM USERS;
+DELETE FROM DRIVER_CAR;
+DELETE FROM CARS;
+DELETE FROM DRIVERS;
+INSERT INTO DRIVERS (FIRST_NAME, LAST_NAME, YEAR_OF_BIRTH) VALUES
+('James','Smith',1985),('Maria','Johnson',1990),('Robert','Williams',1978),('Anna','Brown',1992),('John','Jones',1982),
+('Elena','Garcia',1988),('Michael','Miller',1975),('Olga','Davis',1995),('David','Rodriguez',1980),('Irina','Martinez',1987),
+('Daniel','Hernandez',1991),('Svetlana','Lopez',1979),('Matthew','Wilson',1984),('Natalia','Anderson',1989),('Anthony','Thomas',1976),
+('Elena','Taylor',1993),('Christopher','Moore',1981),('Maria','Jackson',1986),('Joseph','Martin',1994),('Tatyana','Lee',1977),
+('Charles','Perez',1983),('Yulia','Thompson',1990),('Thomas','White',1988),('Anastasia','Harris',1974),('Mark','Sanchez',1992),
+('Ekaterina','Clark',1985),('Donald','Ramirez',1979),('Daria','Lewis',1991),('Steven','Robinson',1986),('Kristina','Walker',1982),
+('Paul','Young',1995),('Victoria','Hall',1978),('Andrew','Allen',1989),('Anna','King',1984),('Joshua','Wright',1990),
+('Polina','Scott',1981),('Kenneth','Green',1976),('Alina','Adams',1993),('Kevin','Baker',1987),('Mariya','Gonzalez',1985),
+('Brian','Nelson',1992),('Ksenia','Carter',1979),('George','Mitchell',1988),('Vera','Parker',1994),('Edward','Roberts',1982),
+('Irina','Turner',1986),('Ronald','Phillips',1977),('Oksana','Campbell',1991),('Timothy','Parker',1983),('Ludmila','Evans',1989);
+INSERT INTO CARS (NAME, MODEL, MANUFACTURING_YEAR) VALUES
+('Toyota','Camry',2020),('Honda','Civic',2019),('Ford','Mustang',2021),('Chevrolet','Silverado',2018),('BMW','X5',2022),
+('Mercedes-Benz','C-Class',2020),('Volkswagen','Golf',2017),('Tesla','Model 3',2023),('Nissan','Altima',2019),('Hyundai','Tucson',2021);

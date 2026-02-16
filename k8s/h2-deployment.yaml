@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: h2
+  namespace: bdsandbox
+  labels:
+    app: h2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: h2
+  template:
+    metadata:
+      labels:
+        app: h2
+    spec:
+      containers:
+      - name: h2
+        image: bdsandbox-h2:1.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 9092
+          name: tcp
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        command:
+        - java
+        - -cp
+        - /opt/h2/h2.jar
+        - org.h2.tools.Server
+        - -tcp
+        - -tcpPort
+        - "9092"
+        - -tcpAllowOthers
+        - -ifNotExists
+        - -baseDir
+        - /data
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: h2-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: h2-service
+  namespace: bdsandbox
+  labels:
+    app: h2
+spec:
+  ports:
+  - port: 9092
+    targetPort: 9092
+    protocol: TCP
+    name: tcp
+  selector:
+    app: h2
