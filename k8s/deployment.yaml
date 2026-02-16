@@ -1,0 +1,49 @@
+# BDSandbox application - database access via ConfigMap and Secret
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bdsandbox
+  namespace: bdsandbox
+  labels:
+    app: bdsandbox
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bdsandbox
+  template:
+    metadata:
+      labels:
+        app: bdsandbox
+    spec:
+      initContainers:
+      - name: wait-for-h2
+        image: busybox:1.36
+        command:
+        - sh
+        - -c
+        - |
+          until nc -z h2-service 9092; do
+            echo "Waiting for H2 on h2-service:9092..."
+            sleep 2
+          done
+          echo "H2 is ready"
+      containers:
+      - name: bdsandbox
+        image: bdsandbox:1.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+          name: http
+        envFrom:
+        - configMapRef:
+            name: bdsandbox-db-config
+        - secretRef:
+            name: bdsandbox-db-secret
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
