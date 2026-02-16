@@ -49,6 +49,18 @@ public class DriverController {
         return new ResponseEntity<List<CarDto>>(cars, HttpStatus.OK);
     }
 
+    /** Cars assigned to this driver (read-only). DRIVER can only see own. */
+    @RequestMapping(value = "/{id}/cars", method = RequestMethod.GET)
+    public ResponseEntity<List<CarDto>> getCarsByDriverId(@PathVariable Integer id) {
+        BdsbUserDetails user = currentUser();
+        if (user == null) return new ResponseEntity<List<CarDto>>(HttpStatus.FORBIDDEN);
+        if ("DRIVER".equals(user.getRole()) && !id.equals(user.getDriverId()))
+            return new ResponseEntity<List<CarDto>>(HttpStatus.FORBIDDEN);
+        if (driverDao.findById(id) == null) return new ResponseEntity<List<CarDto>>(HttpStatus.NOT_FOUND);
+        List<CarDto> cars = carDao.findCarsByDriverId(id);
+        return new ResponseEntity<List<CarDto>>(cars, HttpStatus.OK);
+    }
+
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<DriverDto>> getAll() {
         BdsbUserDetails user = currentUser();

@@ -245,3 +245,17 @@ body {
 .select-multi:focus { outline: none; border-color: var(--accent); }
 
 .form-card .hint { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem; }
+
+.driver-cars-section { margin-top: 1.5rem; }
+.driver-cars-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+.driver-cars-section h3 { margin: 0 0 0.25rem; font-size: 1.1rem; }
+.driver-cars-section .section-desc { color: var(--text-muted); font-size: 0.9rem; margin: 0 0 1rem; }
+.read-only-muted { color: var(--text-muted); font-size: 0.9rem; margin: 0; }
+.read-only-list { margin-top: 0.5rem; }
+.read-only-list .read-only-card { cursor: default; }
+.read-only-card .card-actions { display: none; }

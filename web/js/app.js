@@ -188,8 +188,13 @@
   function renderDriverForm(id) {
     const title = document.getElementById('driver-form-title');
     const formEl = document.getElementById('driver-form');
+    const assignedCarsEl = document.getElementById('driver-assigned-cars');
     const isNew = !id;
     if (title) title.textContent = isNew ? 'New driver' : 'Edit driver';
+    if (assignedCarsEl) {
+      assignedCarsEl.innerHTML = '';
+      assignedCarsEl.classList.toggle('hidden', isNew);
+    }
     if (isNew) {
       formEl.innerHTML =
         '<label>First name</label><input name="firstName" type="text">' +
@@ -241,6 +246,28 @@
             if (r.ok) window.location.hash = '#/drivers';
           });
         };
+        return apiFetch('/drivers/' + id + '/cars').then(r => r.ok ? r.json() : []);
+      })
+      .then(cars => {
+        if (!assignedCarsEl || isNew) return;
+        assignedCarsEl.classList.remove('hidden');
+        assignedCarsEl.innerHTML = '<div class="driver-cars-block"><h3>Cars this driver has</h3><p class="section-desc">Cars assigned to this driver (read-only).</p></div>';
+        const block = assignedCarsEl.querySelector('.driver-cars-block');
+        if (!cars || !cars.length) {
+          block.innerHTML += '<p class="read-only-muted">No cars assigned.</p>';
+          return;
+        }
+        const list = document.createElement('div');
+        list.className = 'card-list read-only-list';
+        cars.forEach(c => {
+          const card = document.createElement('div');
+          card.className = 'card read-only-card';
+          card.innerHTML =
+            '<div><p class="card-title">' + escapeHtml((c.name || '') + ' ' + (c.model || '')) + '</p>' +
+            '<p class="card-meta">Year: ' + (c.manufacturingYear || '') + '</p></div>';
+          list.appendChild(card);
+        });
+        block.appendChild(list);
       });
   }
 
