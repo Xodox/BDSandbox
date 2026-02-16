@@ -1,0 +1,12 @@
+# ConfigMap: database connection settings for BDSandbox app
+# Used by the application deployment; change URL if H2 service name/port changes.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bdsandbox-db-config
+  namespace: bdsandbox
+data:
+  # JDBC URL: H2 TCP server (standalone) in cluster
+  SPRING_DATASOURCE_URL: "jdbc:h2:tcp://h2-service:9092/file:/data/BDSB_H2;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE"
+  SPRING_DATASOURCE_DRIVER_CLASS_NAME: "org.h2.Driver"
+  SPRING_DATASOURCE_USERNAME: "sa"
