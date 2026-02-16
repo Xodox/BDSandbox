@@ -58,3 +58,19 @@ kubectl get configmap bdsandbox-db-config -n bdsandbox -o yaml
 kubectl get secret bdsandbox-db-secret -n bdsandbox -o yaml
 kubectl exec deployment/bdsandbox -n bdsandbox -- env | grep SPRING_DATASOURCE
 ```
+
+## Connectivity check
+
+Run the script to verify app → H2 connectivity and API (DB) access:
+
+```bash
+chmod +x k8s/check-db-connectivity.sh
+./k8s/check-db-connectivity.sh
+```
+
+Or manually: ensure H2 is running with **-ifNotExists** so the database is created on first connection. If the app fails with "Database ... not found, either pre-create it or allow remote database creation", patch the H2 deployment:
+
+```bash
+kubectl patch deployment h2 -n bdsandbox --type='json' -p='[{"op": "add", "path": "/spec/template/spec/containers/0/command", "value": ["java", "-cp", "h2.jar", "org.h2.tools.Server", "-tcp", "-tcpPort", "9092", "-tcpAllowOthers", "-ifNotExists", "-baseDir", "/data"]}]'
+kubectl rollout restart deployment/bdsandbox -n bdsandbox
+```

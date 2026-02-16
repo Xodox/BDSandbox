@@ -17,8 +17,8 @@ import java.sql.Connection;
 public class MainSpringConfiguration {
 
     @Bean
-    public UrlPageDao getUrlPageDao(){
-        return new UrlPageDaoImpl() ;
+    public UrlPageDao getUrlPageDao() {
+        return new UrlPageDaoImpl();
     }
 
     @Bean
