@@ -1,0 +1,17 @@
+CREATE TABLE IF NOT EXISTS WEB_PAGE (ID INT AUTO_INCREMENT PRIMARY KEY, NAME VARCHAR(255), URL VARCHAR(255), "DESC" VARCHAR(255));
+CREATE TABLE IF NOT EXISTS DRIVERS (ID INT AUTO_INCREMENT PRIMARY KEY, FIRST_NAME VARCHAR(255), LAST_NAME VARCHAR(255), YEAR_OF_BIRTH INT);
+CREATE TABLE IF NOT EXISTS CARS (ID INT AUTO_INCREMENT PRIMARY KEY, NAME VARCHAR(255), MODEL VARCHAR(255), MANUFACTURING_YEAR INT);
+CREATE TABLE IF NOT EXISTS DRIVER_CAR (ID INT AUTO_INCREMENT PRIMARY KEY, DRIVER_ID INT NOT NULL, CAR_ID INT NOT NULL, CONSTRAINT fk_driver_car_driver FOREIGN KEY (DRIVER_ID) REFERENCES DRIVERS(ID), CONSTRAINT fk_driver_car_car FOREIGN KEY (CAR_ID) REFERENCES CARS(ID), CONSTRAINT uq_driver_car UNIQUE (DRIVER_ID, CAR_ID));
+CREATE TABLE IF NOT EXISTS USERS (ID INT AUTO_INCREMENT PRIMARY KEY, USERNAME VARCHAR(255) NOT NULL UNIQUE, PASSWORD_HASH VARCHAR(255) NOT NULL, ROLE VARCHAR(50) NOT NULL, DRIVER_ID INT NULL, CONSTRAINT fk_user_driver FOREIGN KEY (DRIVER_ID) REFERENCES DRIVERS(ID));
+DELETE FROM USERS;
+DELETE FROM DRIVER_CAR;
+DELETE FROM CARS;
+DELETE FROM DRIVERS;
+ALTER TABLE DRIVERS ALTER COLUMN ID RESTART WITH 1;
+ALTER TABLE CARS ALTER COLUMN ID RESTART WITH 1;
+ALTER TABLE DRIVER_CAR ALTER COLUMN ID RESTART WITH 1;
+ALTER TABLE USERS ALTER COLUMN ID RESTART WITH 1;
+INSERT INTO DRIVERS (FIRST_NAME, LAST_NAME, YEAR_OF_BIRTH) VALUES ('James','Smith',1985),('Maria','Johnson',1990),('Robert','Williams',1978),('Anna','Brown',1992),('John','Jones',1982),('Elena','Garcia',1988),('Michael','Miller',1975),('Olga','Davis',1995),('David','Rodriguez',1980),('Irina','Martinez',1987),('Daniel','Hernandez',1991),('Svetlana','Lopez',1979),('Matthew','Wilson',1984),('Natalia','Anderson',1989),('Anthony','Thomas',1976),('Elena','Taylor',1993),('Christopher','Moore',1981),('Maria','Jackson',1986),('Joseph','Martin',1994),('Tatyana','Lee',1977),('Charles','Perez',1983),('Yulia','Thompson',1990),('Thomas','White',1988),('Anastasia','Harris',1974),('Mark','Sanchez',1992),('Ekaterina','Clark',1985),('Donald','Ramirez',1979),('Daria','Lewis',1991),('Steven','Robinson',1986),('Kristina','Walker',1982),('Paul','Young',1995),('Victoria','Hall',1978),('Andrew','Allen',1989),('Anna','King',1984),('Joshua','Wright',1990),('Polina','Scott',1981),('Kenneth','Green',1976),('Alina','Adams',1993),('Kevin','Baker',1987),('Mariya','Gonzalez',1985),('Brian','Nelson',1992),('Ksenia','Carter',1979),('George','Mitchell',1988),('Vera','Parker',1994),('Edward','Roberts',1982),('Irina','Turner',1986),('Ronald','Phillips',1977),('Oksana','Campbell',1991),('Timothy','Parker',1983),('Ludmila','Evans',1989);
+INSERT INTO CARS (NAME, MODEL, MANUFACTURING_YEAR) VALUES ('Toyota','Camry',2020),('Honda','Civic',2019),('Ford','Mustang',2021),('Chevrolet','Silverado',2018),('BMW','X5',2022),('Mercedes-Benz','C-Class',2020),('Volkswagen','Golf',2017),('Tesla','Model 3',2023),('Nissan','Altima',2019),('Hyundai','Tucson',2021);
+INSERT INTO DRIVER_CAR (DRIVER_ID, CAR_ID) VALUES (1,1),(2,3),(3,2),(4,5),(5,1),(6,4),(7,7),(8,2),(9,6),(10,8),(11,3),(12,9),(13,1),(14,4),(15,10),(16,5),(17,2),(18,7),(19,6),(20,8);
+INSERT INTO USERS (USERNAME, PASSWORD_HASH, ROLE, DRIVER_ID) VALUES ('admin','$2a$10$dXJ3SW6G7P50lGmMkkmwe.20cQQubK3.HZWzG3YB1tlRy.fqvM/BG','ADMIN',NULL),('officer','$2a$10$dXJ3SW6G7P50lGmMkkmwe.20cQQubK3.HZWzG3YB1tlRy.fqvM/BG','OFFICER',NULL),('driver1','$2a$10$dXJ3SW6G7P50lGmMkkmwe.20cQQubK3.HZWzG3YB1tlRy.fqvM/BG','DRIVER',1),('driver2','$2a$10$dXJ3SW6G7P50lGmMkkmwe.20cQQubK3.HZWzG3YB1tlRy.fqvM/BG','DRIVER',2);

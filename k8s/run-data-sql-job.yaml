@@ -1,0 +1,34 @@
+# One-off Job: run data from data.sql against cluster H2 (requires bdsandbox-h2:1.0 image)
+# Single script: schema + deletes + inserts in one connection.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: run-data-sql
+  namespace: bdsandbox
+spec:
+  ttlSecondsAfterFinished: 3600
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: run-sql
+        image: bdsandbox-h2:1.0
+        imagePullPolicy: IfNotPresent
+        command:
+        - sh
+        - -c
+        - |
+          echo "Waiting for H2..."
+          sleep 5
+          URL="jdbc:h2:tcp://h2-service:9092/file:/data/BDSB_H2"
+          echo "Running full schema + data..."
+          java -cp /opt/h2/h2.jar org.h2.tools.RunScript -url "$URL" -user sa -password "" -script /scripts/full.sql
+          echo "Done."
+        volumeMounts:
+        - name: scripts
+          mountPath: /scripts
+          readOnly: true
+      volumes:
+      - name: scripts
+        configMap:
+          name: data-sql
